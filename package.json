@@ -1,0 +1,22 @@
+{
+	"name": "@btakita/dev-bin",
+	"type": "module",
+	"version": "0.0.0",
+	"types": "index.ts",
+	"bin": {
+		"tw_class_line__split": "./bin/tw_class_line__split.ts"
+	},
+	"exports": {
+		".": "./index.ts",
+		"./package.json": "./package.json"
+	},
+	"dependencies": {
+	},
+	"devDependencies": {
+		"bun-types": "latest",
+		"clipboardy": "^4.0.0"
+	},
+	"peerDependencies": {
+		"typescript": "^5.3.3"
+	}
+}
