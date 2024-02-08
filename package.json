@@ -2,14 +2,20 @@
 	"name": "@btakita/dev-bin",
 	"type": "module",
 	"version": "0.0.0",
-	"types": "index.ts",
 	"bin": {
 		"tw_class_line__split": "./bin/tw_class_line__split.ts"
 	},
+	"types": "index.ts",
 	"exports": {
 		".": "./index.ts",
 		"./package.json": "./package.json"
 	},
+	"files": [
+		"*.d.ts",
+		"*.js",
+		"*.json",
+		"bin"
+	],
 	"dependencies": {
 	},
 	"devDependencies": {
