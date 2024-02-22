@@ -2,6 +2,7 @@
 import { sleep } from 'bun'
 import { param_r_ } from 'ctx-core/cli-args'
 import { run } from 'ctx-core/function'
+import ora from 'ora'
 const param_r = param_r_(Bun.argv.slice(2), {
 	help: '-h, --help',
 	sitemap_a1: '-s, --sitemap',
@@ -24,15 +25,23 @@ async function main() {
 		throw Error('-s,--sitemap & -t,--txt not provided')
 	}
 	const queue = rate_limit_queue_(3, 3, 10_000)
-	const error_url_a1:string[] = []
 	let keep_open__resolve:(value:unknown)=>void
 	queue.add(()=>new Promise(resolve=>keep_open__resolve = resolve))
+	const error_url_a1:string[] = []
+	const remaining_url_S = new Set<string>
+	process.on('SIGINT', ()=>{
+		exit_status__print()
+		process.exit(1)
+	})
+	const spinner = ora().start()
 	if (sitemap_url) await sitemap_url__process()
 	if (txt_path) await txt_path__process()
+	spinner__update()
 	keep_open__resolve!(undefined)
 	await queue.close()
-	if (error_url_a1.length) {
-		console.error('Save error occurred for:\n' + error_url_a1.join('\n'))
+	exit_status__print()
+	function spinner__update() {
+		spinner.text = remaining_url_S.size + ' remaining'
 	}
 	async function sitemap_url__process() {
 		const sitemap_response = await fetch(sitemap_url)
@@ -44,6 +53,7 @@ async function main() {
 				text(node) {
 					const url = node.text
 					if (url) {
+						remaining_url_S.add(url)
 						queue.add(async ()=>{
 							const save_url = 'https://web.archive.org/save/' + url
 							await fetch(save_url)
@@ -55,7 +65,9 @@ async function main() {
 										console.error(res.status + ': ' + save_url)
 									}
 								})
+								.then(()=>remaining_url_S.delete(url))
 								.catch(err=>console.error(err))
+								.finally(()=>spinner__update())
 							await sleep(5)
 						})
 					}
@@ -78,6 +90,7 @@ async function main() {
 		const url_a1 = await Bun.file(txt_path).text().then(txt=>txt.split('\n'))
 		for (const url of url_a1) {
 			if (url) {
+				remaining_url_S.add(url)
 				queue.add(async ()=>{
 					const save_url = 'https://web.archive.org/save/' + url
 					await fetch(save_url)
@@ -88,9 +101,24 @@ async function main() {
 								error_url_a1.push(url)
 								console.error(res.status + ': ' + save_url)
 							}
-						}).catch(err=>console.error(err))
+						})
+						.then(()=>remaining_url_S.delete(url))
+						.catch(err=>console.error(err))
+						.finally(()=>spinner__update())
 					await sleep(5)
 				})
+			}
+		}
+	}
+	function exit_status__print() {
+		spinner.stop()
+		if (remaining_url_S.size || error_url_a1.length) {
+			console.info('------Unsaved urls------')
+			for (const remaining_url of remaining_url_S) {
+				console.info(remaining_url)
+			}
+			for (const error_url of error_url_a1) {
+				console.error(error_url)
 			}
 		}
 	}
@@ -135,10 +163,10 @@ type link_o_T = { url:string }&Record<string, string>
 // ))
 function rate_limit_queue_(max_concurrent:number, per_interval:number, interval:number) {
 	let interval_start_ms = new Date().getTime()
-	let now_ = ()=>new Date().getTime()
+	const now_ = ()=>new Date().getTime()
 	let running_count = 0
 	let interval_started_count = 0
-	let queue:(()=>Promise<unknown>)[] = []
+	const queue:(()=>Promise<unknown>)[] = []
 	let close__resolve:(arg:unknown)=>void
 	let is_closed = false
 	function add(fn:()=>Promise<unknown>) {
@@ -146,7 +174,7 @@ function rate_limit_queue_(max_concurrent:number, per_interval:number, interval:
 			console.warn('The queue is closed. New tasks cannot be added.')
 			return
 		}
-		let now = now_()
+		const now = now_()
 		if (
 			running_count <= max_concurrent
 			&& (
@@ -164,7 +192,7 @@ function rate_limit_queue_(max_concurrent:number, per_interval:number, interval:
 	}
 	function run(fn:()=>Promise<unknown>) {
 		running_count++
-		let now = now_()
+		const now = now_()
 		if (now - interval_start_ms >= interval) {
 			interval_start_ms = now
 			interval_started_count = 0
