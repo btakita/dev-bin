@@ -3,8 +3,9 @@
 	"type": "module",
 	"version": "0.0.0",
 	"bin": {
-		"sourcemap__resolve__bun": "./bin/sourcemap__resolve__bun.ts",
+		"ia__save": "./bin/ia__save.ts",
 		"iso_datetime": "./bin/iso_datetime.ts",
+		"sourcemap__resolve__bun": "./bin/sourcemap__resolve__bun.ts",
 		"spaces_to_tabs": "./bin/spaces_to_tabs.ts",
 		"tw_class_line__split": "./bin/tw_class_line__split.ts"
 	},
