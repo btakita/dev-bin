@@ -34,7 +34,7 @@ async function main() {
 }
 function help_msg_() {
 	return `
-Usage: verify-version-node.js [-p <bun-run-file>]
+Usage: verify-version-node [-p <bun-run-file>]
 
 Options:
 
