@@ -3,6 +3,7 @@
 	"type": "module",
 	"version": "0.0.0",
 	"bin": {
+		"sourcemap__resolve__bun": "./bin/sourcemap__resolve__bun.ts",
 		"iso_datetime": "./bin/iso_datetime.ts",
 		"spaces_to_tabs": "./bin/spaces_to_tabs.ts",
 		"tw_class_line__split": "./bin/tw_class_line__split.ts"
@@ -19,6 +20,9 @@
 		"bin"
 	],
 	"dependencies": {
+		"@ctx-core/source-map": "^0.2.51",
+		"ctx-core": "^6.4.4",
+		"picocolors": "^1.0.0"
 	},
 	"devDependencies": {
 		"bun-types": "latest",
