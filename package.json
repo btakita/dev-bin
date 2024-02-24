@@ -3,6 +3,7 @@
 	"type": "module",
 	"version": "0.0.0",
 	"bin": {
+		"git_pull_rebase_submodules_parallel": "./bin/git_pull_rebase_submodules_parallel.sh",
 		"ia__save": "./bin/ia__save.ts",
 		"iso_datetime": "./bin/iso_datetime.ts",
 		"sourcemap__resolve__bun": "./bin/sourcemap__resolve__bun.ts",
