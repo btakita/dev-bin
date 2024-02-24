@@ -21,9 +21,9 @@
 		"bin"
 	],
 	"dependencies": {
-		"@ctx-core/source-map": "^0.2.51",
+		"@ctx-core/source-map": "^0.2.52",
 		"clipboardy": "^4.0.0",
-		"ctx-core": "^6.4.4",
+		"ctx-core": "^6.4.5",
 		"ora": "^8.0.1",
 		"picocolors": "^1.0.0"
 	},
