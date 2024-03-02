@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
+import { response__drain } from '@rappstack/domain--server/response'
 import { sleep } from 'bun'
 import { param_r_ } from 'ctx-core/cli-args'
-import { run } from 'ctx-core/function'
 import ora from 'ora'
 const param_r = param_r_(Bun.argv.slice(2), {
 	help: '-h, --help',
@@ -74,17 +74,12 @@ async function main() {
 				}
 			})
 		const xml = await sitemap_response.text()
-		const rw_response = rw.transform(
-			new Response(
-				xml
-					.replaceAll(/<[^>]*:/g, '<')
-					.replaceAll(/<\/[^>]*:/g, '</')))
-		await run(async ()=>{
-			const reader = rw_response.body!.getReader()
-			while (!(await reader.read()).done) {
-				/* empty */
-			}
-		})
+		await response__drain(
+			rw.transform(
+				new Response(
+					xml
+						.replaceAll(/<[^>]*:/g, '<')
+						.replaceAll(/<\/[^>]*:/g, '</'))))
 	}
 	async function txt_path__process() {
 		const url_a1 = await Bun.file(txt_path).text().then(txt=>txt.split('\n'))
