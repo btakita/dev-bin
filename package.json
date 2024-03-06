@@ -6,8 +6,10 @@
 		"git_pull_rebase_submodules_parallel": "./bin/git_pull_rebase_submodules_parallel.sh",
 		"ia__save": "./bin/ia__save.ts",
 		"iso_datetime": "./bin/iso_datetime.ts",
+		"kebob__underscore_": "./bin/kebob__underscore_.ts",
 		"sourcemap__resolve__bun": "./bin/sourcemap__resolve__bun.ts",
 		"spaces_to_tabs": "./bin/spaces_to_tabs.ts",
+		"title__url_slug_": "./bin/title__url_slug_.ts",
 		"tw_class_line__split": "./bin/tw_class_line__split.ts"
 	},
 	"types": "index.ts",
@@ -26,7 +28,8 @@
 		"clipboardy": "^4.0.0",
 		"ctx-core": "^6.5.3",
 		"ora": "^8.0.1",
-		"picocolors": "^1.0.0"
+		"picocolors": "^1.0.0",
+		"url-slug": "^4.0.1"
 	},
 	"devDependencies": {
 		"bun-types": "latest"
