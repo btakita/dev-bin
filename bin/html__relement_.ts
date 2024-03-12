@@ -2,6 +2,7 @@
 import { response__drain } from '@rappstack/domain--server/response'
 import clipboard from 'clipboardy'
 import { is_entry_file_ } from 'ctx-core/all'
+import { tw_class_line__split } from './tw_class_line__split.js'
 import Element = HTMLRewriterTypes.Element
 import EndTag = HTMLRewriterTypes.EndTag
 const lower_tagName_R_camel_tagName:Record<string, string|undefined> = {
@@ -75,22 +76,41 @@ export async function html__relement_(html:string) {
 				relement += lower_tagName_R_camel_tagName[tagName] ?? tagName
 				relement += '_('
 				let attribute_count = 0
+				let key:string|undefined = undefined
 				for (const [_key, value] of element.attributes) {
-					const key = lower_attr_R_attr[_key] ?? _key
+					key = lower_attr_R_attr[_key] ?? _key
 					if (!attribute_count) {
-						relement += '{ '
+						relement += '{'
 					} else {
-						relement += ', '
+						relement += ','
+					}
+					if (key === 'class') {
+						relement += `\n${'  '.repeat(stack.length)}`
+					} else {
+						relement += ' '
 					}
 					++attribute_count
-					relement += `${
+					relement +=
 						!key || /[^a-zA-Z_]/.test(key[0]) || /[^a-zA-Z_0-9]/.test(key)
 							? `'${key}'`
 							: key
-					}: '${value.replaceAll("'", "\\'")}'`
+					relement += ': '
+					relement +=
+						key === 'class'
+							? `class_(\n${
+								tw_class_line__split(value)
+									.split('\n')
+									.map(line=>'  '.repeat(stack.length + 1) + line)
+									.join('\n')})`
+							: `'${value.replaceAll('\'', '\\\'')}'`
 				}
 				if (attribute_count) {
-					relement += ' }'
+					if (key === 'class') {
+						relement += '\n' + '  '.repeat(stack.length)
+					} else {
+						relement += ' '
+					}
+					relement += '}'
 					tos_().has_attr = true
 				}
 				if (element.selfClosing) {
@@ -117,7 +137,7 @@ export async function html__relement_(html:string) {
 					}
 					tos_().child_count++
 					relement += '  '.repeat(stack.length)
-					relement += `'${trim_text.replaceAll("'", "\'")}'`
+					relement += `'${trim_text.replaceAll('\'', '\'')}'`
 				}
 			},
 		})

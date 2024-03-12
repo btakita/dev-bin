@@ -8,7 +8,10 @@ test('1 level self-closing tag', async ()=>{
 test('1 level with text', async ()=>{
 	equal(await html__relement_(`<span class="ml-3">Watch the full video (2 min)</span>`),
 		`
-span_({ class: 'ml-3' }, [
+span_({
+  class: class_(
+    'ml-3')
+  }, [
   'Watch the full video (2 min)'
 ])
 		`.trim())
@@ -96,10 +99,35 @@ test('single quote in attribute', async ()=>{
 				</div>
 		</div>
 	`), `
-div_({ id: 'modal', class: 'fixed inset-0 z-50 overflow-hidden flex items-center justify-center transform px-4 sm:px-6', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'modal-headline', 'x-show': 'modalExpanded', 'x-transition:enter': 'transition ease-out duration-200', 'x-transition:enter-start': 'opacity-0 scale-95', 'x-transition:enter-end': 'opacity-100 scale-100', 'x-transition:leave': 'transition ease-out duration-200', 'x-transition:leave-start': 'opacity-100 scale-100', 'x-transition:leave-end': 'opacity-0 scale-95', 'x-cloak': '' }, [
-  div_({ class: 'bg-white overflow-auto max-w-6xl w-full max-h-full', '@click.outside': 'modalExpanded = false', '@keydown.escape.window': 'modalExpanded = false' }, [
-    div_({ class: 'relative pb-9/16' }, [
-      video_({ 'x-init': '$watch(\\'modalExpanded\\', value => value ? $el.play() : $el.pause())', class: 'absolute w-full h-full', width: '1920', height: '1080', loop: '', controls: '' }, [
+div_({ id: 'modal',
+  class: class_(
+    'fixed',
+    'inset-0',
+    'z-50',
+    'overflow-hidden',
+    'flex',
+    'items-center',
+    'justify-center',
+    'transform',
+    'px-4',
+    'sm:px-6'), role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'modal-headline', 'x-show': 'modalExpanded', 'x-transition:enter': 'transition ease-out duration-200', 'x-transition:enter-start': 'opacity-0 scale-95', 'x-transition:enter-end': 'opacity-100 scale-100', 'x-transition:leave': 'transition ease-out duration-200', 'x-transition:leave-start': 'opacity-100 scale-100', 'x-transition:leave-end': 'opacity-0 scale-95', 'x-cloak': '' }, [
+  div_({
+    class: class_(
+      'bg-white',
+      'overflow-auto',
+      'max-w-6xl',
+      'w-full',
+      'max-h-full'), '@click.outside': 'modalExpanded = false', '@keydown.escape.window': 'modalExpanded = false' }, [
+    div_({
+      class: class_(
+        'relative',
+        'pb-9/16')
+      }, [
+      video_({ 'x-init': '$watch(\\'modalExpanded\\', value => value ? $el.play() : $el.pause())',
+        class: class_(
+          'absolute',
+          'w-full',
+          'h-full'), width: '1920', height: '1080', loop: '', controls: '' }, [
         source_({ src: './videos/video.mp4', type: 'video/mp4' }),
         'Your browser does not support the video tag.'
       ])
