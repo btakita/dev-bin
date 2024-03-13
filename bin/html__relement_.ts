@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 import { response__drain } from '@rappstack/domain--server/response'
 import clipboard from 'clipboardy'
-import { is_entry_file_ } from 'ctx-core/all'
+import { is_entry_file_ } from 'ctx-core/fs'
 import { tw_class_line__split } from './tw_class_line__split.js'
 import Element = HTMLRewriterTypes.Element
 import EndTag = HTMLRewriterTypes.EndTag
