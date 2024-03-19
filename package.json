@@ -3,6 +3,7 @@
 	"type": "module",
 	"version": "0.0.0",
 	"bin": {
+		"git_log_n1__clipboard": "./bin/git_log_n1__clipboard.sh",
 		"git_pull_rebase_submodules_parallel": "./bin/git_pull_rebase_submodules_parallel.sh",
 		"html__relement_": "./bin/html__relement_.ts",
 		"ia__save": "./bin/ia__save.ts",
