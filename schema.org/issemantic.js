@@ -9,7 +9,7 @@
  * ```
  */
 /** @see {https://issemantic.net/rdf-visualizer} */
-function url__update(url) {
+globalThis.url__update = url=>{
 	$('[href="#websearch"]').trigger('click')
 	document.querySelector('[name=input][value=mixed]').checked = true
 	const page_val = document.querySelector('#page-val')
@@ -22,7 +22,7 @@ function url__update(url) {
 		force__stop()
 	}, 5_000)
 }
-function snippet__update(snippet) {
+globalThis.snippet__update = snippet=>{
 	$('[href="#snippet"]').trigger('click')
 	document.querySelector('[name=input][value=mixed]').checked = true
 	const page_val = document.querySelector('#snippet-data')
@@ -35,10 +35,10 @@ function snippet__update(snippet) {
 		force__stop()
 	}, 5_000)
 }
-function force__stop() {
+globalThis.force__stop = ()=>{
 	force.stop()
 }
-function sd_svg__full_height() {
+globalThis.sd_svg__full_height = ()=>{
 	const sd_svg = document.querySelector('#svg-cont')
 	const sd_svg_parent = sd_svg.parentElement
 	sd_svg_parent.style.height = '100dvh'

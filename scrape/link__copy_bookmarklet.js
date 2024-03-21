@@ -1,0 +1,2 @@
+/** @see {https://pastebin.com/K6Lh33Ay} */
+javascript:(()=>{let link_a1 = document.querySelectorAll('a');let google_link_a1 = [];for (let i = 0; i < link_a1.length; i++) {let link = link_a1[i].href;if (link.startsWith('http') && !link.startsWith('https://www.google.')) google_link_a1.push(link);}let linksText = google_link_a1.join('\n');navigator.clipboard.writeText(linksText).then(()=>alert('Links copied to clipboard.')).catch(err=>alert('Could not copy links: ', err))})()
