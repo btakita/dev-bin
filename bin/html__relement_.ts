@@ -137,7 +137,7 @@ export async function html__relement_(html:string) {
 					}
 					tos_().child_count++
 					relement += '  '.repeat(stack.length)
-					relement += `'${trim_text.replaceAll('\'', '\'')}'`
+					relement += `\`${trim_text.replaceAll('`', '\`')}\``
 				}
 			},
 		})
