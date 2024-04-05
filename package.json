@@ -30,9 +30,9 @@
 		"bin"
 	],
 	"dependencies": {
-		"@ctx-core/source-map": "^0.2.80",
+		"@ctx-core/source-map": "^0.2.81",
 		"clipboardy": "^4.0.0",
-		"ctx-core": "^7.1.2",
+		"ctx-core": "^7.1.3",
 		"ora": "^8.0.1",
 		"picocolors": "^1.0.0",
 		"url-slug": "^4.0.1"
