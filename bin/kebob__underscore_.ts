@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
-import clipboard from 'clipboardy'
-const kebob = await clipboard.read()
+import { clipboard__read, clipboard__write } from '../clipboard/index.js'
+const kebob = await clipboard__read()
 const underscore = kebob.replaceAll('-', '_')
-clipboard.write(underscore)
+await clipboard__write(underscore)
 console.info(underscore)

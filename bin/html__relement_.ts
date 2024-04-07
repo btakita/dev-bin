@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 import { response__drain } from '@rappstack/domain--server/response'
-import clipboard from 'clipboardy'
 import { is_entry_file_ } from 'ctx-core/fs'
+import { clipboard__read, clipboard__write } from '../clipboard/index.js'
 import { tw_class_line__split } from './tw_class_line__split.js'
 import Element = HTMLRewriterTypes.Element
 import EndTag = HTMLRewriterTypes.EndTag
@@ -160,8 +160,8 @@ export async function html__relement_(html:string) {
 	}
 }
 if (is_entry_file_(import.meta.url, process.argv[1])) {
-	html__relement_(await clipboard.read())
-		.then(relement=>clipboard.write(relement))
+	html__relement_(await clipboard__read())
+		.then(relement=>clipboard__write(relement))
 		.then(()=>process.exit(0))
 		.catch(err=>{
 			console.error(err)

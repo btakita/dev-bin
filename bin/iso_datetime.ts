@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-import clipboard from 'clipboardy'
+import { clipboard__write } from '../clipboard/index.js'
 const iso_datetime = new Date().toISOString()
-await clipboard.write(iso_datetime)
+await clipboard__write(iso_datetime)
 console.info(iso_datetime)
