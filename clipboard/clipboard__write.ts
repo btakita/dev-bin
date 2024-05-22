@@ -9,6 +9,12 @@ export async function clipboard__write(text:string) {
 		if (!error.message.includes('Couldn\'t find the `xsel` binary and fallback didn\'t work.') || !is_wayland) {
 			throw error
 		}
-		spawn(['wl-copy', text], { stdio: ['ignore', 'ignore', 'ignore'] })
+		wl_copy(text)
 	}
- }
+	if (!await clipboard.read()) {
+		wl_copy(text)
+	}
+}
+function wl_copy(text:string) {
+	return spawn(['wl-copy', text], { stdio: ['ignore', 'ignore', 'ignore'] })
+}
